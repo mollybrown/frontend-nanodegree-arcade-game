@@ -48,21 +48,21 @@ Player.prototype.update = function(dt) {
   }
   if (this.y < 0 || this.y > 400) {
     if (this.y < 0) {
-        player.game_win();
+        this.game_win();
         }
         else {
           this.y = 400;
         }
     }
-  player.checkCollisions();
+  this.checkCollisions();
 };
 
 // Display game win message and reset
 Player.prototype.game_win = function() {
   setTimeout (function() {
     alert('You won! Yay! The game will now be reset.');
-    player.reset();
-    },0);
+    this.reset();
+  }.bind(this), 0);
 };
 
 // Render/draw Player sprite on screen
@@ -72,15 +72,15 @@ Player.prototype.render = function() {
 
 // Detect player-enemy collisions
 Player.prototype.checkCollisions = function() {
-  for (var i = 0; i < allEnemies.length; i++) {
+  for (var i = 0, len = allEnemies.length; i < len; i++) {
     if ((this.x < allEnemies[i].x + allEnemies[i].width) &&
         (this.x + this.width > allEnemies[i].x) &&
         (this.y < allEnemies[i].y + allEnemies[i].height) &&
         (this.height + this.y > allEnemies[i].y)) {
           setTimeout (function() {
             alert('Oh no! Collision! The game will be reset.');
-            player.reset();
-          },0);
+            this.reset();
+          }.bind(this), 0);
     }
   }
 };
